@@ -24,7 +24,9 @@ def get_available_csv():
         r["filename"].str.split(r"[-.]", expand=True).iloc[:, 4:7]
     )
     ix = r["file"] == "csv"
-    return r[ix].sort_values(["year", "type"]).reset_index(drop=True)
+    r = r[ix]
+    r["year"] = pd.to_numeric(r["year"])
+    return r.sort_values(["year", "type"]).reset_index(drop=True)
 
 
 def get_stats19(year=2023, incident="collision"):
